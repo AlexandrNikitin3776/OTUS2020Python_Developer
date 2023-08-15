@@ -37,7 +37,7 @@ def get_last_log_file(log_dir: LogDir) -> FilePath:
     ...
 
 
-def is_report_done(report_dir: ReportDir, log_file: FilePath) -> bool:
+def is_report_processed(report_dir: ReportDir, log_file: FilePath) -> bool:
     ...
 
 
@@ -45,7 +45,7 @@ def main():
     config = get_config()
 
     last_log_file = get_last_log_file(config.log_dir)
-    if is_report_done(config.report_dir, last_log_file):
+    if is_report_processed(config.report_dir, last_log_file):
         return
 
 
