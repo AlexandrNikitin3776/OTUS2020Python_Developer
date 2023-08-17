@@ -9,7 +9,7 @@
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Self, TypeAlias
+from typing import IO, Self, TypeAlias
 
 config = {
     "REPORT_SIZE": 1000,
@@ -19,7 +19,7 @@ config = {
 }
 
 FilePath: TypeAlias = str
-LogDir: TupeAlias = str
+LogDir: TypeAlias = str
 ReportDir: TypeAlias = str
 ReportSize: TypeAlias = str
 
@@ -45,6 +45,7 @@ class LogFile:
         ...
 
 
+@dataclass
 class ReportFile:
     path: str
 
@@ -65,7 +66,7 @@ def is_report_processed(report_dir: ReportDir, log_file: FilePath) -> bool:
     ...
 
 
-def render_report(report_data: list[Report], template: FilePath) -> str:
+def render_report(report_data: list[ReportFile], template: FilePath) -> str:
     ...
 
 
