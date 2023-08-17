@@ -44,12 +44,14 @@ class LogFile:
     def from_path(cls, path: str) -> Self:
         ...
 
+
 class ReportFile:
     path: str
-    
+
     @classmethod
     def from_logfile(cls, logfile: LogFile) -> Self:
         ...
+
 
 def get_config() -> Config:
     ...
@@ -66,19 +68,19 @@ def is_report_processed(report_dir: ReportDir, log_file: FilePath) -> bool:
 def render_report(report_data: list[Report], template: FilePath) -> str:
     ...
 
+
 def main():
     config = get_config()
 
     last_log_file = get_last_log_file(config.log_dir)
     if is_report_processed(config.report_dir, last_log_file):
         return
-    
-    
+
     report = render_report(report_data, config.render_template)
     report_filename = construct_report_filename(config.report_dir, last_log_filename)
     with open(report_filename, "w") as report_file:
         report_file.write(report)
 
+
 if __name__ == "__main__":
     main()
-
