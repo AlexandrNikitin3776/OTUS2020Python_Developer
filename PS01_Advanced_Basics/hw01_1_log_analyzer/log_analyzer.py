@@ -55,7 +55,7 @@ class ReportFile:
         ...
 
 
-def get_last_log_filenane(log_dir: LogDir) -> FilePath:
+def get_last_log_file(log_dir: LogDir) -> FilePath:
     ...
 
 
