@@ -5,7 +5,7 @@ import tempfile
 
 
 def touch(dir: str, filename: str) -> str:
-    filepath = os.path.join(tmpdir, filename)
+    filepath = os.path.join(dir, filename)
     with open(filepath, "w"):
         pass
     return filepath
