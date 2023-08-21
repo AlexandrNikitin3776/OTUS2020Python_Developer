@@ -42,9 +42,9 @@ def test_get_last_log_file_ignores_wrong_filenames():
     ...
 
 
-def def test_get_last_log_file_from_empty_dir():
+def test_get_last_log_file_from_empty_dir():
     ...
 
 
-def def test_get_last_log_file_different_extensions():
+def test_get_last_log_file_different_extensions():
     ...
