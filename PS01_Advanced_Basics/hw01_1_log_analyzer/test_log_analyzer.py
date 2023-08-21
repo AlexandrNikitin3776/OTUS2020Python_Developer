@@ -13,5 +13,5 @@ def test_config():
 
 def test_get_last_log_file():
     with tempfile.TemporaryDirectory() as tmpdir:
-        with tempfile.NamedTemporaryFile(dir=tmpdir) tmpfile:
+        with tempfile.NamedTemporaryFile(dir=tmpdir) as tmpfile:
             assert False
