@@ -6,16 +6,10 @@ log_format ui_short '$remote_addr  $remote_user $http_x_real_ip [$time_local] "$
 
 """
 
+import argparse
 from dataclasses import dataclass
 from datetime import datetime
 from typing import IO, Self, TypeAlias
-
-config = {
-    "REPORT_SIZE": 1000,
-    "REPORT_DIR": "./reports",
-    "LOG_DIR": "./log",
-    "REPORT_TEMPLATE": "./templates/report.html",
-}
 
 FilePath: TypeAlias = str
 LogDir: TypeAlias = str
@@ -27,12 +21,14 @@ ReportSize: TypeAlias = str
 class Config:
     """Parser config"""
 
-    report_size: ReportSize
-    report_dir: ReportDir
-    log_dir: LogDir
+    report_size: ReportSize = 1000
+    report_dir: ReportDir = "./reports"
+    log_dir: LogDir = "./log"
+    report_template_path: str = "./templates/report.html"
 
     @classmethod
     def from_file(cls, fileobj: IO) -> Self:
+        """Getting config from config file"""
         ...
 
 
@@ -59,12 +55,6 @@ class ReportFile:
         ...
 
 
-def get_config() -> Config:
-    """Getting config from config file"""
- 
-    ...
-
-
 def get_last_log_filenane(log_dir: LogDir) -> FilePath:
     ...
 
@@ -78,7 +68,15 @@ def render_report(report_data: list[ReportFile], template: FilePath) -> str:
 
 
 def main():
-    config = get_config()
+    parser = argparse.ArgumentParser(
+        prog="Log analyzer",
+        description="Parse last nginx log from logs dir to reports dir",
+    )
+    parser.add_argument("-c", "--config", default="./config.toml", help="Config file path in toml format")
+    args = parser.parse_args()
+
+    with open(args.config) as config_toml:
+        config = Config.from_file(config_toml)
 
     last_log_file = get_last_log_file(config.log_dir)
     if is_report_processed(config.report_dir, last_log_file):
