@@ -2,7 +2,7 @@ import io
 from log_analyzer import Config, get_last_log_file
 import os
 import tempfile
-from pathlob import Path
+from pathlib import Path
 
 
 def test_config():
