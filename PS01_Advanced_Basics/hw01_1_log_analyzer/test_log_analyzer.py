@@ -2,22 +2,7 @@ import io
 from log_analyzer import Config, get_last_log_file
 import os
 import tempfile
-
-
-def touch(dir: str, filename: str) -> str:
-    filepath = os.path.join(dir, filename)
-    with open(filepath, "w"):
-        pass
-    return filepath
-
-
-def test_touch():
-    filename = "test_file.txt"
-    with tempfile.TemporaryDirectory() as tmpdir:
-        got_filepath = touch(tmpdir, filename)
-
-        assert os.path.isfile(got_filepath)
-        assert got_filepath == os.path.join(tmpdir, filename)
+from pathlob import Path
 
 
 def test_config():
@@ -30,8 +15,9 @@ def test_config():
 
 def test_get_last_log_file():
     with tempfile.TemporaryDirectory() as tmpdir:
-        touch(tmpdir, "nginx-access-ui.log-20170630.gz")
-        touch(tmpdir, "nginx-access-ui.log-20070630.gz")
+        wd = Path(tmpdir)
+        (wd / "nginx-access-ui.log-20170630.gz").touch()
+        (wd / "nginx-access-ui.log-20070630.gz").touch()
 
         got_last_file = get_last_log_file(tmpdir)
             
