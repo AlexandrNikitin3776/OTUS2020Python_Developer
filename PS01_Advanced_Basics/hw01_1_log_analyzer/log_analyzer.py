@@ -13,11 +13,26 @@ from typing import IO, Self
 from pathlib import Path
 
 
+class LogFile:
+    def __init__(self, path: Path | str) -> None:
+        self.path = Path(path)
+        self.ts = self.get_ts(path)
+
+
+class LogDir:
+    def __init__(self, path: Path | str) -> None:
+        self.path = Path(path)
+
+    def get_last_log_file(self) -> LogFile:
+        files = self.path.glob("nginx*.gz")
+        return list(files)
+
+
 @dataclass
 class Config:
     report_size: int = 1000
     report_dir: Path = Path("./reports")
-    log_dir: Path = Path("./log")
+    log_dir: LogDir = LogDir("./log")
     report_template_path: Path = Path("./templates/report.html")
 
     @classmethod
@@ -46,10 +61,6 @@ class Report:
     ...
 
 
-def get_last_log_file(log_dir: Path) -> LogFile:
-    ...
-
-
 def render_report(report_data: list[Report], template: Path) -> str:
     ...
 
@@ -65,7 +76,7 @@ def main():
     with open(args.config) as config_toml:
         config = Config.from_file(config_toml)
 
-    last_log_file = get_last_log_file(config.log_dir)
+    last_log_file = config.log_dir.get_last_log_file()
     if is_report_processed(config.report_dir, last_log_file):
         return
 
