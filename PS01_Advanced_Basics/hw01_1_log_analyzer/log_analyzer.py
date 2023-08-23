@@ -9,22 +9,16 @@ log_format ui_short '$remote_addr  $remote_user $http_x_real_ip [$time_local] "$
 import argparse
 from dataclasses import dataclass
 from datetime import datetime
-from typing import IO, Self, TypeAlias
-
-FilePath: TypeAlias = str
-LogDir: TypeAlias = str
-ReportDir: TypeAlias = str
-ReportSize: TypeAlias = str
+from typing import IO, Self
+from pathlib import Path
 
 
 @dataclass
 class Config:
-    """Parser config"""
-
-    report_size: ReportSize = 1000
-    report_dir: ReportDir = "./reports"
-    log_dir: LogDir = "./log"
-    report_template_path: str = "./templates/report.html"
+    report_size: int = 1000
+    report_dir: Path = Path("./reports")
+    log_dir: Path = Path("./log")
+    report_template_path: Path = Path("./templates/report.html")
 
     @classmethod
     def from_file(cls, fileobj: IO) -> Self:
@@ -34,36 +28,29 @@ class Config:
 
 @dataclass
 class LogFile:
-    """Log file info"""
-
-    date: datetime
-    path: str
+    log_date: datetime
+    log_path: Path
 
     @classmethod
-    def from_path(cls, path: str) -> Self:
+    def from_log_path(cls, log_path: Path) -> Self:
         ...
 
 
 @dataclass
 class ReportFile:
-    """ Report file info"""
-
-    path: str
-
-    @classmethod
-    def from_logfile(cls, logfile: LogFile) -> Self:
-        ...
+    report_path: Path
 
 
-def get_last_log_file(log_dir: LogDir) -> FilePath:
+@dataclass
+class Report:
     ...
 
 
-def is_report_processed(report_dir: ReportDir, log_file: FilePath) -> bool:
+def get_last_log_file(log_dir: Path) -> LogFile:
     ...
 
 
-def render_report(report_data: list[ReportFile], template: FilePath) -> str:
+def render_report(report_data: list[Report], template: Path) -> str:
     ...
 
 
