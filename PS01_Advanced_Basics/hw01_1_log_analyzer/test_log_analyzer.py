@@ -27,7 +27,7 @@ def test_get_last_log_file():
 
         got_last_file = LogDir(tmpdir).get_last_log_file()
             
-        assert got_last_file == os.path.join(tmpdir, "nginx-access-ui.log-20170630.gz")
+        assert got_last_file == Path(tmpdir, "nginx-access-ui.log-20170630.gz")
 
 
 def test_get_last_log_file_ignores_wrong_filenames():
