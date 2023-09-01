@@ -4,6 +4,9 @@ import os
 import tempfile
 from pathlib import Path
 
+import pytest
+
+
 @pytest.mark.parametrize(
     "file_content, want_config",
     [
