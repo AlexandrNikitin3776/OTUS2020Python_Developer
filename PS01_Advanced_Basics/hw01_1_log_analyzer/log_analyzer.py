@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import IO, Self
 from pathlib import Path
-
+import tomllib
 
 class LogFile:
     def __init__(self, path: Path | str) -> None:
@@ -38,7 +38,8 @@ class Config:
     @classmethod
     def from_file(cls, fileobj: IO) -> Self:
         """Getting config from config file"""
-        ...
+        data = tomllib.load(fileobj)
+        return cls(**data)
 
 
 @dataclass
