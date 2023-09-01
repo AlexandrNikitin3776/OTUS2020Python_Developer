@@ -8,7 +8,7 @@ from pathlib import Path
     "file_content, want_config",
     [
         (b"", Config()),
-        (b"report_size=500, Config(report_size=500)),
+        (b"report_size=500", Config(report_size=500)),
     ],
 )
 def test_config(file_content: bytes, want_config: Config):
