@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 def test_config():
-    file = io.StringIO("")
+    file = io.BytesIO(b"")
 
     got_config = Config.from_file(file)
 
