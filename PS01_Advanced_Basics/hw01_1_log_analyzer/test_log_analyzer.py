@@ -1,5 +1,5 @@
 import io
-from log_analyzer import Config, get_last_log_file
+from log_analyzer import Config, LogDir
 import os
 import tempfile
 from pathlib import Path
@@ -19,7 +19,7 @@ def test_get_last_log_file():
         (wd / "nginx-access-ui.log-20170630.gz").touch()
         (wd / "nginx-access-ui.log-20070630.gz").touch()
 
-        got_last_file = get_last_log_file(tmpdir)
+        got_last_file = LogDir(tmpdir).get_last_log_file()
             
         assert got_last_file == os.path.join(tmpdir, "nginx-access-ui.log-20170630.gz")
 
