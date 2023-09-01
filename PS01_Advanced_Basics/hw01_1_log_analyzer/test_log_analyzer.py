@@ -4,13 +4,19 @@ import os
 import tempfile
 from pathlib import Path
 
-
-def test_config():
-    file = io.BytesIO(b"")
+@pytest.mark.parametrize(
+    "file_content, want_config",
+    [
+        (b"", Config()),
+        (b"report_size=500, Config(report_size=500)),
+    ],
+)
+def test_config(file_content: bytes, want_config: Config):
+    file = io.BytesIO(file_content)
 
     got_config = Config.from_file(file)
 
-    assert got_config == Config()
+    assert got_config == want_config
 
 
 def test_get_last_log_file():
