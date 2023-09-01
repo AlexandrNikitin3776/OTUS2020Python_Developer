@@ -9,7 +9,7 @@ log_format ui_short '$remote_addr  $remote_user $http_x_real_ip [$time_local] "$
 import argparse
 from dataclasses import dataclass
 from datetime import datetime
-from typing import IO, Self
+from typing import BinaryIO, IO, Self
 from pathlib import Path
 import tomllib
 
@@ -36,7 +36,7 @@ class Config:
     report_template_path: Path = Path("./templates/report.html")
 
     @classmethod
-    def from_file(cls, fileobj: IO) -> Self:
+    def from_file(cls, fileobj: BinaryIO) -> Self:
         """Getting config from config file"""
         data = tomllib.load(fileobj)
         return cls(**data)
