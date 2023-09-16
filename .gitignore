@@ -133,3 +133,6 @@ dmypy.json
 
 # Lectures
 Lectures/
+
+# MacOs
+.DS_Store
